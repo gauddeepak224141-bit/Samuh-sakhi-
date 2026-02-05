@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Samuh Sakhi App</title>
+
+<style>
+
+/* ===== BODY ===== */
+body{
+font-family:Segoe UI;
+margin:0;
+background:linear-gradient(135deg,#e8f5e9,#c8e6c9,#a5d6a7);
+}
+
+/* ===== HEADER ===== */
+.header{
+margin:8px;
+padding:10px;
+text-align:center;
+border:3px solid #2e7d32;
+border-radius:14px;
+background:linear-gradient(135deg,#e3f2fd,#bbdefb);
+}
+
+.header h2{color:red;margin:0;font-size:16px}
+.header h3{color:blue;margin:0;font-size:13px}
+.header p{color:green;margin:0;font-size:12px}
+
+/* ===== GALLERY ===== */
+.gallery{
+display:flex;
+gap:10px;
+overflow-x:auto;
+padding:10px;
+scroll-snap-type:x mandatory;
+}
+
+.gallery img{
+width:200px;
+height:130px;
+object-fit:cover;
+border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,0.3);
+scroll-snap-align:center;
+}
+
+/* ===== SECTION ===== */
+.section{display:none;padding:10px;padding-bottom:120px;}
+.active{display:block}
+
+/* ===== CARD ===== */
+.card{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:white;
+margin:8px 0;
+padding:10px;
+border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,0.2);
+}
+
+.left{display:flex;align-items:center}
+.left img{
+width:50px;height:50px;border-radius:50%;margin-right:8px;
+}
+
+/* ===== INPUT ===== */
+label{font-weight:bold;font-size:13px}
+input{
+width:95%;
+padding:8px;
+margin:4px 0;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+/* ===== BUTTON ===== */
+button{
+padding:6px 10px;
+border:none;
+border-radius:8px;
+margin:3px;
+background:#2e7d32;
+color:white;
+}
+
+.edit{background:#1976d2}
+.delete{background:#d32f2f}
+
+video{
+width:130px;
+border-radius:10px;
+background:black;
+}
+
+/* ===== DETAIL ===== */
+.detail{
+background:#e3f2fd;
+padding:12px;
+border-radius:12px;
+}
+
+/* ===== MENU ===== */
+.menu{
+position:fixed;
+bottom:0;
+width:100%;
+display:flex;
+justify-content:space-around;
+background:#1b5e20;
+padding:15px 0;
+}
+.menu button{
+background:none;
+color:white;
+font-size:14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+<h2>उत्तर प्रदेश राज्य ग्रामीण आजीविका मिशन</h2>
+<h3>उठो नारी, जागो नारी, सशक्तिशाली बनो नारी</h3>
+<p>महिलाएं बचत करें • सीखें • कमाएं • आत्मनिर्भर बनें</p>
+</div>
+
+
+<!-- ================= HOME ================= -->
+<div id="home" class="section active">
+
+<div class="gallery">
+<img src="https://images.unsplash.com/photo-1593113598332-cd288d649433">
+<img src="https://images.unsplash.com/photo-1609220136736-443140cffec6">
+<img src="https://images.unsplash.com/photo-1581579188871-45ea61f2a1d3">
+<img src="https://images.unsplash.com/photo-1612696879965-6c1a6b29b6f1">
+<img src="https://images.unsplash.com/photo-1609132718484-cc90df3417f8">
+</div>
+
+<p>
+🌸 Samuh Sakhi महिलाओं को संगठित कर आत्मनिर्भर बनाता है।  
+मजबूत महिला = मजबूत गांव = मजबूत भारत 🇮🇳
+</p>
+
+</div>
+
+
+<!-- ================= GROUPS ================= -->
+<div id="groups" class="section">
+<h3>Groups</h3>
+<div id="groupBox"></div>
+</div>
+
+
+<!-- ================= ADD MEMBER ================= -->
+<div id="add" class="section">
+
+<label>Gram Sangathan Name</label>
+<input id="gramName">
+
+<label>SHG Name</label>
+<input id="shgName">
+
+<label>Member Photo</label><br>
+<video id="cam1" autoplay></video><br>
+<button onclick="capture('cam1','img1')">📸 Capture</button>
+<canvas id="img1" hidden></canvas>
+
+<label>Name</label>
+<input id="name">
+
+<label>Date of Birth</label>
+<input type="date" id="dob">
+
+<label>Husband Name</label>
+<input id="husband">
+
+<label>Mobile</label>
+<input id="mobile">
+
+<label>Aadhaar No</label>
+<input id="aadhaar">
+
+<label>Aadhaar Photo</label><br>
+<video id="cam2" autoplay></video><br>
+<button onclick="capture('cam2','img2')">📸 Capture</button>
+<canvas id="img2" hidden></canvas>
+
+<label>Bank A/C No</label>
+<input id="bank">
+
+<label>IFSC Code</label>
+<input id="ifsc">
+
+<label>Passbook Photo</label><br>
+<video id="cam3" autoplay></video><br>
+<button onclick="capture('cam3','img3')">📸 Capture</button>
+<canvas id="img3" hidden></canvas>
+
+<h4>Extra Details</h4>
+<div id="extraBox"></div>
+<button onclick="addExtra()">➕ Add Extra</button>
+
+<br><br>
+<button onclick="saveMember()">Save</button>
+
+</div>
+
+
+<!-- ================= DETAIL ================= -->
+<div id="detail" class="section">
+<div id="detailBox"></div>
+</div>
+
+
+<!-- MENU -->
+<div class="menu">
+<button onclick="show('home')">🏠 Home</button>
+<button onclick="show('groups')">👥 Groups</button>
+<button onclick="show('add')">➕ Add</button>
+</div>
+
+
+<script>
+
+let groups={};
+
+/* navigation */
+function show(id){
+document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+/* extra */
+function addExtra(){
+let i=document.createElement("input");
+i.placeholder="Extra info";
+extraBox.appendChild(i);
+}
+
+/* ===== CAMERA ===== */
+async function startCamera(id){
+try{
+let stream=await navigator.mediaDevices.getUserMedia({video:true});
+document.getElementById(id).srcObject=stream;
+}catch(e){
+alert("Chrome browser me open kare aur camera allow kare");
+}
+}
+
+startCamera("cam1");
+startCamera("cam2");
+startCamera("cam3");
+
+function capture(v,c){
+let video=document.getElementById(v);
+let canvas=document.getElementById(c);
+canvas.width=video.videoWidth;
+canvas.height=video.videoHeight;
+canvas.getContext("2d").drawImage(video,0,0);
+}
+
+/* save */
+function saveMember(){
+
+let gram=gramName.value.trim();
+let shg=shgName.value.trim();
+
+let label="";
+if(gram && shg) label=gram+" → "+shg;
+else if(shg) label=shg;
+else label=gram;
+
+if(!groups[label]) groups[label]=[];
+
+groups[label].push({
+img:img1.toDataURL(),
+name:name.value,
+dob:dob.value,
+husband:husband.value,
+mobile:mobile.value,
+aadhaar:aadhaar.value,
+aimg:img2.toDataURL(),
+bank:bank.value,
+ifsc:ifsc.value,
+bimg:img3.toDataURL(),
+extra:[...extraBox.querySelectorAll("input")].map(i=>i.value)
+});
+
+updateGroups();
+show('groups');
+}
+
+/* group view */
+function updateGroups(){
+groupBox.innerHTML="";
+let n=1;
+for(let g in groups){
+groupBox.innerHTML+=`
+<div class="card">
+<b>${n++}. ${g} (${groups[g].length})</b>
+<button onclick="showMembers('${g}')">View</button>
+</div>`;
+}
+}
+
+/* members */
+function showMembers(g){
+groupBox.innerHTML="<h3>"+g+"</h3>";
+groups[g].forEach((m,i)=>{
+groupBox.innerHTML+=`
+<div class="card">
+<div class="left"><img src="${m.img}">${m.name}</div>
+<button onclick="viewDetail('${g}',${i})">Details</button>
+</div>`;
+});
+}
+
+/* detail */
+function viewDetail(g,i){
+let m=groups[g][i];
+detailBox.innerHTML=`
+<div class="detail">
+<img src="${m.img}" width="100"><br><br>
+<b>Name:</b> ${m.name}<br>
+<b>DOB:</b> ${m.dob}<br>
+<b>Husband:</b> ${m.husband}<br>
+<b>Mobile:</b> ${m.mobile}<br>
+<b>Aadhaar:</b> ${m.aadhaar}<br>
+<img src="${m.aimg}" width="120"><br><br>
+<b>Bank:</b> ${m.bank}<br>
+<b>IFSC:</b> ${m.ifsc}<br>
+<img src="${m.bimg}" width="120"><br><br>
+${m.extra.join("<br>")}
+</div>`;
+show('detail');
+}
+
+</script>
+
+</body>
+</html>
